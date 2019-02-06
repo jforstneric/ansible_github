@@ -1,0 +1,38 @@
+---
+#This playbook installs Samba with one anonymously accessible share
+- hosts: host
+  remote_user: user
+  become: yes
+  become_user: root
+  become_method: su
+  
+  tasks:
+  
+  - name: Install Samba server
+    apt:
+     name: samba
+  
+  - name: Make Samba directory
+    file:
+     path: /srv/samba
+     state: directory
+  
+  - name: Make Share directory, give nobody full permissions on it
+    file:
+     path: /srv/samba/share
+     state: directory
+     owner: nobody
+     group: nogroup
+     mode: 0777
+   
+  - name: Upload example SMB config (make backup of original config)
+    copy: 
+     src: templates/smb_example.conf 
+     dest: /etc/samba/smb.conf
+     backup: yes
+    
+  - name: Restart Samba daemon
+    service:
+     name: smbd
+     state: restarted
+...

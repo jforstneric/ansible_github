@@ -1,0 +1,28 @@
+---
+#This playbook updates a Debian server
+- hosts: host
+  remote_user: user
+  become: yes
+  become_user: root
+  become_method: su
+  
+  tasks:
+  
+  - name: Update repositories (APT) cache
+    apt: 
+     update_cache: yes
+   
+  - name: Update all packages to the latest version
+    apt:
+     upgrade: dist
+   
+  - name: Remove useless packages frotm the cache
+    apt:
+     autoclean: yes
+   
+  - name: Remove dependencies that are no longer required
+    apt:
+     autoremove: yes
+   
+
+...

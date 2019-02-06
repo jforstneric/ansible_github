@@ -1,0 +1,27 @@
+---
+#This playbook installs Incron and adds root and user to allowed users
+- hosts: host
+  remote_user: user
+  become: yes
+  become_user: root
+  become_method: su
+  
+  tasks:
+  
+  - name: Install Incron
+    apt: 
+     name: incron
+    
+  - name: Add root to incron.allow
+    lineinfile:
+     path: /etc/incron.allow
+     line: root
+     insertbefore: BOF
+     
+  - name: Add user to incron.allow
+    lineinfile:
+     path: /etc/incron.allow
+     line: user
+     insertbefore: BOF 
+
+...

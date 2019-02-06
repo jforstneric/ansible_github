@@ -1,0 +1,28 @@
+---
+#This playbook sets incron for our watch folder
+- hosts: host
+  remote_user: user
+  become: yes
+  become_user: root
+  become_method: su
+
+  tasks:
+   - name: Create incron user table for user user
+     file:
+      path: "/var/spool/incron/user" 
+      state: touch
+      mode: 0777
+  
+   - name: Add incron command to /var/spool/incron/user
+     lineinfile: 
+      path: /var/spool/incron/user
+      line: /srv/samba/share/watch_folder IN_CREATE,IN_NO_LOOP /bin/sh /srv/samba/share/example_script.sh
+      
+   - name: Start incron daemon
+     systemd:
+      state: started
+      enabled: yes
+      name: incron
+
+...
+
