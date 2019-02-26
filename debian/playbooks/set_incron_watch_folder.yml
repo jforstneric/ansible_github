@@ -1,7 +1,6 @@
 ---
 #This playbook sets incron for our watch folder
-- hosts: host
-  remote_user: user
+- hosts: all
   become: yes
   become_user: root
   become_method: su

@@ -1,7 +1,6 @@
 ---
 #This playbook installs Samba with one anonymously accessible share
-- hosts: host
-  remote_user: user
+- hosts: all
   become: yes
   become_user: root
   become_method: su

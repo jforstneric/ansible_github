@@ -1,7 +1,6 @@
 ---
 #This playbook installs Incron and adds root and user to allowed users
-- hosts: host
-  remote_user: user
+- hosts: all
   become: yes
   become_user: root
   become_method: su
